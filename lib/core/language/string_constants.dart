@@ -6,6 +6,7 @@ class StringConstants {
   /// Common
   static const String kSuccess = "Success";
   static const String kError = "Error";
+  static const String kLifeTracker = "LifeTracker";
 
   /// Errors
   static const String kSomethingWentWrong = "Something went wrong";
@@ -45,4 +46,8 @@ class StringConstants {
   static const String kScheduledForPeriod = "8 tasks scheduled for this period";
   static const String kNoMoreTasksToday = "No more tasks scheduled for today.";
   static const String kViewTomorrow = "View Tomorrow";
+
+  /// Splash Screen Labels
+  static const String kPoweredBy = "Powered by ";
+  static const String kDesignOps = "Design Ops";
 }

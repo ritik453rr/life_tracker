@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/language/string_constants.dart';
 import '../controller/create_task_controller.dart';
 import '../widgets/task_form_card.dart';
 
 /// Screen view for creating new task(s).
-class CreateTaskPage extends GetView<CreateTaskController> {
+class CreateTaskPage extends StatelessWidget {
+  /// Creates a [CreateTaskPage] instance.
   const CreateTaskPage({super.key});
 
+  /// Builds the task creation screen using StatelessWidget and Get.find controller lookup.
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<CreateTaskController>();
     final months = [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
@@ -34,7 +38,7 @@ class CreateTaskPage extends GetView<CreateTaskController> {
                   ),
                   const SizedBox(width: 16),
                   const Text(
-                    "Create Task",
+                    StringConstants.kCreateTask,
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
@@ -60,7 +64,7 @@ class CreateTaskPage extends GetView<CreateTaskController> {
                   children: [
                     // DATE Selector Box
                     const Text(
-                      "DATE",
+                      StringConstants.kDate,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
@@ -157,7 +161,7 @@ class CreateTaskPage extends GetView<CreateTaskController> {
                             ),
                             SizedBox(width: 6),
                             Text(
-                              "Add Another Task",
+                              StringConstants.kAddAnotherTask,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -185,7 +189,7 @@ class CreateTaskPage extends GetView<CreateTaskController> {
                           ),
                         ),
                         child: const Text(
-                          "Create Tasks",
+                          StringConstants.kCreateTasks,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,

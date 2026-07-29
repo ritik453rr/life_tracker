@@ -6,14 +6,16 @@ import '../../dashboard/widgets/task_item_card.dart';
 import '../controller/task_list_controller.dart';
 import '../widgets/active_focus_card.dart';
 
-/// Screen view for Today's Tasks screen.
-class TaskListPage extends GetView<TaskListController> {
+/// Common Task List Screen view displaying tasks based on route filter arguments.
+class TaskListPage extends StatelessWidget {
   /// Creates a [TaskListPage] instance.
   const TaskListPage({super.key});
 
-  /// Builds the Today's Tasks screen layout without bottom navigation.
+  /// Builds the Task List screen using StatelessWidget and Get.find controller lookup.
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<TaskListController>();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(

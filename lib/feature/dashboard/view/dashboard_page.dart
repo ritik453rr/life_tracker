@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/language/string_constants.dart';
 import '../../../core/routing/app_routes.dart';
 import '../controller/dashboard_controller.dart';
 import '../widgets/dashboard_header.dart';
@@ -7,12 +8,16 @@ import '../widgets/period_stat_card.dart';
 import '../widgets/task_item_card.dart';
 import '../widgets/yearly_progress_card.dart';
 
-/// Main Dashboard View Screen
-class DashboardPage extends GetView<DashboardController> {
+/// Main Dashboard View Screen displaying progress, statistics, and upcoming tasks.
+class DashboardPage extends StatelessWidget {
+  /// Creates a [DashboardPage] instance.
   const DashboardPage({super.key});
 
+  /// Builds the main Dashboard page structure using StatelessWidget and Get.find controller lookup.
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DashboardController>();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
@@ -79,7 +84,7 @@ class DashboardPage extends GetView<DashboardController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Upcoming Tasks",
+                          StringConstants.kUpcomingTasks,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w800,
@@ -94,7 +99,7 @@ class DashboardPage extends GetView<DashboardController> {
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                           child: const Text(
-                            "View All",
+                            StringConstants.kViewAll,
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
