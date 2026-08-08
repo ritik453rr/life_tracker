@@ -13,6 +13,9 @@ coverage/
 # Flutter / Dart lock files
 **/pubspec.lock
 
+# Flutter metadata
+.metadata
+
 # Generated Flutter files
 **/GeneratedPluginRegistrant.*
 **/generated_plugin_registrant.dart
