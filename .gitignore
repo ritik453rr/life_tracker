@@ -10,6 +10,9 @@
 build/
 coverage/
 
+# Flutter / Dart lock files
+**/pubspec.lock
+
 # Generated Flutter files
 **/GeneratedPluginRegistrant.*
 **/generated_plugin_registrant.dart
