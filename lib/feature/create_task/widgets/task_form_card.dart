@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../../core/common_widgets/app_drop_down_button.dart';
 import '../model/create_task_model.dart';
 
 /// Card widget containing input fields for a single task entry.
 class TaskFormCard extends StatelessWidget {
   final int taskIndex;
-  final TaskFormItem item;
+  final CreateTaskModel item;
   final bool showRemove;
   final VoidCallback onRemove;
   final List<String> categoryOptions;
@@ -41,10 +42,7 @@ class TaskFormCard extends StatelessWidget {
           child: Row(
             children: [
               // Left Blue Accent Strip
-              Container(
-                width: 5,
-                color: const Color(0xFF0066CC),
-              ),
+              Container(width: 5, color: const Color(0xFF0066CC)),
               // Main Card Form Content
               Expanded(
                 child: Padding(
@@ -175,50 +173,13 @@ class TaskFormCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: const Color(0xFFE2E8F0),
-                            width: 1.2,
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: item.category,
-                            isExpanded: true,
-                            dropdownColor: Colors.white,
-                            borderRadius: BorderRadius.circular(14),
-                            elevation: 4,
-                            icon: const Icon(
-                              Icons.keyboard_arrow_down,
-                              color: Color(0xFF64748B),
-                              size: 22,
-                            ),
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF0F172A),
-                            ),
-                            onChanged: onCategoryChanged,
-                            items: categoryOptions.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF0F172A),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                      AppDropDownButton<String>(
+                        value: item.category,
+                        options: categoryOptions,
+                        onChanged: onCategoryChanged,
                       ),
+                 
+                 
                     ],
                   ),
                 ),

@@ -5,7 +5,6 @@ import 'app_colors.dart';
 
 /// Provides const utility across the application.
 class AppConstants {
-
   /// Hide keyboard method
   static void hideKeyboard() {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -24,11 +23,11 @@ class AppConstants {
   static void setSafeArea({bool isDark = false}) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: isDark ? AppColors.cBlack : AppColors.cWhite,
-        systemNavigationBarIconBrightness:
-            isDark ? Brightness.light : Brightness.dark,
-        statusBarIconBrightness:
-            isDark ? Brightness.light : Brightness.dark,
+        systemNavigationBarColor: isDark ? AppColors.cBlack : AppColors.cFFFFFF,
+        systemNavigationBarIconBrightness: isDark
+            ? Brightness.light
+            : Brightness.dark,
+        statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
       ),
     );
   }

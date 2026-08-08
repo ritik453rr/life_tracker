@@ -16,7 +16,6 @@ class TaskListPage extends StatelessWidget {
     final controller = Get.find<TaskListController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
         child: Column(
           children: [

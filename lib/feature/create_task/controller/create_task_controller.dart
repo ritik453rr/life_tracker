@@ -5,6 +5,7 @@ import '../service/create_task_service.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/model/dashboard_model.dart';
 import '../../task_list/controller/task_list_controller.dart';
+import '../../../core/language/string_constants.dart';
 
 /// GetX Controller for managing the Create Task / Edit Task screen state.
 class CreateTaskController extends GetxController {
@@ -21,8 +22,13 @@ class CreateTaskController extends GetxController {
   DateTime? _initialDate;
 
   final Rx<DateTime> selectedDate = DateTime.now().obs;
-  final RxList<TaskFormItem> taskItems = <TaskFormItem>[].obs;
-  final List<String> categoryOptions = ["General", "Work", "Health", "Personal"];
+  final RxList<CreateTaskModel> taskItems = <CreateTaskModel>[].obs;
+  final List<String> categoryOptions = [
+    StringConstants.kGeneral,
+    StringConstants.kWorkCategory,
+    StringConstants.kHealthCategory,
+    StringConstants.kPersonalCategory,
+  ];
 
   @override
   void onInit() {
@@ -94,7 +100,7 @@ class CreateTaskController extends GetxController {
     isFormValid.value = valid;
   }
 
-  void _attachListeners(TaskFormItem item) {
+  void _attachListeners(CreateTaskModel item) {
     item.titleController.addListener(_onFormInputChanged);
     item.descriptionController.addListener(_onFormInputChanged);
   }
@@ -113,7 +119,7 @@ class CreateTaskController extends GetxController {
         }
       }
 
-      final item = TaskFormItem(
+      final item = CreateTaskModel(
         id: args.id,
         category: category,
       );
@@ -142,7 +148,7 @@ class CreateTaskController extends GetxController {
   }
 
   void addNewTaskForm() {
-    final newItem = TaskFormItem(id: DateTime.now().millisecondsSinceEpoch.toString());
+    final newItem = CreateTaskModel(id: DateTime.now().millisecondsSinceEpoch.toString());
     _attachListeners(newItem);
     taskItems.add(newItem);
     _onFormInputChanged();
@@ -223,7 +229,7 @@ class CreateTaskController extends GetxController {
         computedTitle = firstLine.length > 35 ? "${firstLine.substring(0, 35)}..." : firstLine;
       }
       if (computedTitle.isEmpty) {
-        computedTitle = "Untitled Task";
+        computedTitle = StringConstants.kUntitledTask;
       }
 
       if (Get.isRegistered<DashboardController>()) {

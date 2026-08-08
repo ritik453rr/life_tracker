@@ -19,7 +19,6 @@ class CreateTaskPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
         child: Column(
           children: [
@@ -39,7 +38,7 @@ class CreateTaskPage extends StatelessWidget {
                   const SizedBox(width: 16),
                   Obx(() {
                     return Text(
-                      controller.isEditing.value ? "Edit Task" : StringConstants.kCreateTask,
+                      controller.isEditing.value ? StringConstants.kEditTask : StringConstants.kCreateTask,
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
@@ -199,7 +198,7 @@ class CreateTaskPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            controller.isEditing.value ? "Update Task" : StringConstants.kCreateTasks,
+                            controller.isEditing.value ? StringConstants.kUpdateTask : StringConstants.kCreateTasks,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,

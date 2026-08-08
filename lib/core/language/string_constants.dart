@@ -28,6 +28,9 @@ class StringConstants {
 
   /// Create Task Labels
   static const String kCreateTask = "Create Task";
+  static const String kEditTask = "Edit Task";
+  static const String kUpdateTask = "Update Task";
+  static const String kUntitledTask = "Untitled Task";
   static const String kDate = "DATE";
   static const String kTaskTitle = "TASK TITLE";
   static const String kWhatNeedsToBeDone = "What needs to be done?";
@@ -36,6 +39,12 @@ class StringConstants {
   static const String kCategory = "CATEGORY";
   static const String kAddAnotherTask = "Add Another Task";
   static const String kCreateTasks = "Create Tasks";
+
+  /// Categories
+  static const String kGeneral = "General";
+  static const String kWorkCategory = "Work";
+  static const String kHealthCategory = "Health";
+  static const String kPersonalCategory = "Personal";
 
   /// Task List Labels
   static const String kTodaysTasks = "Today's Tasks";

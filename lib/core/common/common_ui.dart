@@ -8,18 +8,14 @@ import '../language/string_constants.dart';
 
 /// Utility class providing reusable common UI widgets and helpers across the app.
 class CommonUI {
-
-/// Returns a customizable circular loading indicator with optional color and stroke width.
+  /// Returns a customizable circular loading indicator with optional color and stroke width.
   static Widget circularIndicator({
-    Color color=AppColors.cBlue,
-    double strokeWidth=3,
+    Color color = AppColors.cBlue,
+    double strokeWidth = 3,
   }) {
-    return CircularProgressIndicator(
-      color: color,
-      strokeWidth: strokeWidth,
-    );
+    return CircularProgressIndicator(color: color, strokeWidth: strokeWidth);
   }
-  
+
   /// Method to return load more indicator.
   static Widget loadMoreIndicator({
     double? strokeWidth,
@@ -35,7 +31,7 @@ class CommonUI {
       ),
     );
   }
-  
+
   /// Wraps the given widget with a pull-to-refresh indicator that triggers the provided refresh callback.
   static Widget refreshIndicator({
     required Widget child,
@@ -44,23 +40,16 @@ class CommonUI {
     return RefreshIndicator(
       onRefresh: onRefresh,
       color: AppColors.cBlue,
-      backgroundColor: AppColors.cWhite,
+      backgroundColor: AppColors.cFFFFFF,
       child: child,
     );
   }
-  
+
   /// Wrapper around SafeArea that applies platform-aware bottom padding and configurable top inset.
-  static Widget safeArea({
-    required Widget child,
-    bool top = true,
-  }) {
-    return SafeArea(
-      bottom: !GetPlatform.isIOS,
-      top: top,
-      child: child,
-    );
+  static Widget safeArea({required Widget child, bool top = true}) {
+    return SafeArea(bottom: !GetPlatform.isIOS, top: top, child: child);
   }
-  
+
   /// Method to set network image
   static Widget setNetworkImg({
     String imgUrl = "",
@@ -93,12 +82,12 @@ class CommonUI {
       ),
     );
   }
-  
+
   /// Builds a customizable TextButton with left alignment, optional styling, and built-in haptic feedback and keyboard dismissal.
   static Widget customTextBtn({
     required String title,
     void Function()? onPressed,
-    EdgeInsetsGeometry padding=EdgeInsets.zero,
+    EdgeInsetsGeometry padding = EdgeInsets.zero,
     TextStyle? style,
   }) {
     return TextButton(
@@ -116,27 +105,23 @@ class CommonUI {
         AppConstants.hideKeyboard();
         onPressed?.call();
       },
-      child: Text(
-        title,
-        style: style 
-      ),
+      child: Text(title, style: style),
     );
   }
-  
 
-/// Displays a success or error snackBar with a trimmed message based on API response.
+  /// Displays a success or error snackBar with a trimmed message based on API response.
   static void showApiSnackBar({
     bool isSuccess = false,
     required String message,
   }) {
-    final displayMessage =
-        message.length > 200 ? "${message.substring(0, 200)}..." : message;
+    final displayMessage = message.length > 200
+        ? "${message.substring(0, 200)}..."
+        : message;
 
     Get.snackbar(
       isSuccess ? StringConstants.kSuccess.tr : StringConstants.kError.tr,
       displayMessage,
-      backgroundColor:
-          isSuccess ? Colors.green.shade600 : Colors.red.shade600,
+      backgroundColor: isSuccess ? Colors.green.shade600 : Colors.red.shade600,
       colorText: Colors.white,
     );
   }

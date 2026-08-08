@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 /// Data class representing a dynamic task form entry.
-class TaskFormItem {
+class CreateTaskModel {
   final String id;
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   String category;
 
-  TaskFormItem({
+  CreateTaskModel({
     required this.id,
     TextEditingController? titleController,
     TextEditingController? descriptionController,

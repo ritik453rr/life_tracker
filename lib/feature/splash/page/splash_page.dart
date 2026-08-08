@@ -16,7 +16,6 @@ class SplashPage extends StatelessWidget {
     Get.find<SplashController>();
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
