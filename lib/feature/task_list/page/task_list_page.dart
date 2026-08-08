@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/language/string_constants.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../dashboard/widgets/task_item_card.dart';
 import '../controller/task_list_controller.dart';
@@ -45,29 +44,6 @@ class TaskListPage extends StatelessWidget {
                       ),
                     );
                   }),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.search,
-                      size: 22,
-                      color: Color(0xFF334155),
-                    ),
-                  ),
-                  Container(
-                    width: 34,
-                    height: 34,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFF1E293B),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -87,6 +63,10 @@ class TaskListPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
+                    // Interactive Search Bar Widget
+                    _SearchBar(controller: controller),
+                    const SizedBox(height: 16),
+
                     // Active Focus Card
                     Obx(() {
                       final summary = controller.focusSummary.value;
@@ -99,56 +79,24 @@ class TaskListPage extends StatelessWidget {
 
                     // Task List Items
                     Obx(() {
+                      final filtered = controller.filteredTasks;
+                      if (filtered.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.tasks.length,
+                        itemCount: filtered.length,
                         itemBuilder: (context, index) {
-                          final task = controller.tasks[index];
+                          final task = filtered[index];
                           return TaskItemCard(
                             task: task,
-                            onToggle: () => controller.toggleTaskCompletion(index),
+                            onToggle: () => controller.toggleTaskCompletion(task),
+                            onTap: () => Get.toNamed(AppRoutes.createTask, arguments: task),
                           );
                         },
                       );
                     }),
-                    const SizedBox(height: 32),
-
-                    // Footer Empty / View Tomorrow Section
-                    Container(
-                      width: 56,
-                      height: 56,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFFF1F5F9),
-                      ),
-                      child: const Icon(
-                        Icons.event_available_outlined,
-                        size: 28,
-                        color: Color(0xFF94A3B8),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      StringConstants.kNoMoreTasksToday,
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF64748B),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        StringConstants.kViewTomorrow,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xFF0066CC),
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 40),
                   ],
                 ),
@@ -167,6 +115,80 @@ class TaskListPage extends StatelessWidget {
           color: Colors.white,
           size: 28,
         ),
+      ),
+    );
+  }
+}
+
+/// Interactive Search Bar widget for searching tasks by title or category.
+class _SearchBar extends StatelessWidget {
+  final TaskListController controller;
+
+  const _SearchBar({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 2.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF64748B).withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.search_rounded,
+            color: Color(0xFF94A3B8),
+            size: 20,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              controller: controller.searchFieldController,
+              onChanged: controller.onSearchChanged,
+              decoration: const InputDecoration(
+                hintText: "Search tasks...",
+                hintStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF94A3B8),
+                ),
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0),
+              ),
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF0F172A),
+              ),
+            ),
+          ),
+          Obx(() {
+            if (controller.searchQuery.value.isEmpty) {
+              return const SizedBox.shrink();
+            }
+            return GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                controller.clearSearch();
+              },
+              child: const Icon(
+                Icons.cancel,
+                color: Color(0xFF94A3B8),
+                size: 18,
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

@@ -189,6 +189,9 @@ class TaskFormCard extends StatelessWidget {
                           child: DropdownButton<String>(
                             value: item.category,
                             isExpanded: true,
+                            dropdownColor: Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                            elevation: 4,
                             icon: const Icon(
                               Icons.keyboard_arrow_down,
                               color: Color(0xFF64748B),
@@ -203,7 +206,14 @@ class TaskFormCard extends StatelessWidget {
                             items: categoryOptions.map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value),
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF0F172A),
+                                  ),
+                                ),
                               );
                             }).toList(),
                           ),

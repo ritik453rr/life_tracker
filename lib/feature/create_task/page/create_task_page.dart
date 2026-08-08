@@ -37,14 +37,16 @@ class CreateTaskPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  const Text(
-                    StringConstants.kCreateTask,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF0F172A),
-                    ),
-                  ),
+                  Obx(() {
+                    return Text(
+                      controller.isEditing.value ? "Edit Task" : StringConstants.kCreateTask,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF0F172A),
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -127,7 +129,7 @@ class CreateTaskPage extends StatelessWidget {
                           return TaskFormCard(
                             taskIndex: index + 1,
                             item: item,
-                            showRemove: controller.taskItems.length > 1,
+                            showRemove: controller.taskItems.length > 1 && !controller.isEditing.value,
                             onRemove: () => controller.removeTaskForm(index),
                             categoryOptions: controller.categoryOptions,
                             onCategoryChanged: (val) =>
@@ -137,66 +139,77 @@ class CreateTaskPage extends StatelessWidget {
                       );
                     }),
 
-                    // Add Another Task Button
-                    GestureDetector(
-                      onTap: controller.addNewTaskForm,
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFEFF6FF),
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: const Color(0xFFDBEAFE),
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.add,
-                              size: 18,
-                              color: Color(0xFF0066CC),
+                    // Add Another Task Button (Creation Mode only)
+                    Obx(() {
+                      if (controller.isEditing.value) {
+                        return const SizedBox.shrink();
+                      }
+                      return GestureDetector(
+                        onTap: controller.addNewTaskForm,
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEFF6FF),
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(
+                              color: const Color(0xFFDBEAFE),
+                              width: 1.5,
                             ),
-                            SizedBox(width: 6),
-                            Text(
-                              StringConstants.kAddAnotherTask,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.add,
+                                size: 18,
                                 color: Color(0xFF0066CC),
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 6),
+                              Text(
+                                StringConstants.kAddAnotherTask,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF0066CC),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                     const SizedBox(height: 32),
 
-                    // Create Tasks Submit Button
+                    // Create / Update Tasks Submit Button
                     SizedBox(
                       width: double.infinity,
                       height: 54,
-                      child: ElevatedButton(
-                        onPressed: controller.submitTasks,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0052CC),
-                          elevation: 2,
-                          shadowColor: const Color(0xFF0052CC).withValues(alpha: 0.3),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(27),
+                      child: Obx(() {
+                        final isValid = controller.isFormValid.value;
+                        return ElevatedButton(
+                          onPressed: isValid ? controller.submitTasks : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0052CC),
+                            disabledBackgroundColor: const Color(0xFF0052CC).withValues(alpha: 0.12),
+                            elevation: isValid ? 2 : 0,
+                            shadowColor: const Color(0xFF0052CC).withValues(alpha: 0.3),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(27),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          StringConstants.kCreateTasks,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
+                          child: Text(
+                            controller.isEditing.value ? "Update Task" : StringConstants.kCreateTasks,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: isValid
+                                  ? Colors.white
+                                  : const Color(0xFF0052CC).withValues(alpha: 0.4),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                     ),
                     const SizedBox(height: 20),
                   ],

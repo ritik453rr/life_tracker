@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/language/string_constants.dart';
 import '../model/task_list_model.dart';
@@ -8,17 +9,53 @@ import '../../dashboard/model/dashboard_model.dart';
 class TaskListController extends GetxController {
   final TaskListService _service = TaskListService();
 
-  /// Observable filter period string (TODAY, WEEK, MONTH, EXPIRED).
-  final RxString currentFilter = StringConstants.kToday.obs;
+  /// Observable filter period string (ALL, TODAY, WEEK, MONTH, EXPIRED).
+  final RxString currentFilter = StringConstants.kAll.obs;
 
   /// Observable screen title text matching active filter.
-  final RxString screenTitle = StringConstants.kTodaysTasks.obs;
+  final RxString screenTitle = StringConstants.kAllTasks.obs;
 
   /// Observable focus summary metrics.
   final Rx<FocusSummaryModel?> focusSummary = Rx<FocusSummaryModel?>(null);
 
   /// Observable list of tasks scheduled for the active filter period.
   final RxList<TaskModel> tasks = <TaskModel>[].obs;
+
+  /// Observable search query string.
+  final RxString searchQuery = ''.obs;
+
+  /// Text editing controller for search input field.
+  final TextEditingController searchFieldController = TextEditingController();
+
+  /// Computed list of tasks filtered by active search query.
+  List<TaskModel> get filteredTasks {
+    final query = searchQuery.value.trim().toLowerCase();
+    if (query.isEmpty) {
+      return tasks;
+    }
+    return tasks.where((task) {
+      final titleMatch = task.title.toLowerCase().contains(query);
+      final categoryMatch = task.category.toLowerCase().contains(query);
+      return titleMatch || categoryMatch;
+    }).toList();
+  }
+
+  /// Updates search query string.
+  void onSearchChanged(String query) {
+    searchQuery.value = query;
+  }
+
+  /// Clears active search query and resets text field.
+  void clearSearch() {
+    searchFieldController.clear();
+    searchQuery.value = '';
+  }
+
+  @override
+  void onClose() {
+    searchFieldController.dispose();
+    super.onClose();
+  }
 
   /// Initializes controller, extracts route arguments filter, and loads data.
   @override
@@ -37,6 +74,8 @@ class TaskListController extends GetxController {
       } else if (args is String) {
         currentFilter.value = args;
       }
+    } else {
+      currentFilter.value = StringConstants.kAll;
     }
     _updateScreenTitle();
   }
@@ -50,8 +89,10 @@ class TaskListController extends GetxController {
       screenTitle.value = StringConstants.kThisMonthsTasks;
     } else if (upper == StringConstants.kExpired) {
       screenTitle.value = StringConstants.kExpiredTasks;
-    } else {
+    } else if (upper == StringConstants.kToday) {
       screenTitle.value = StringConstants.kTodaysTasks;
+    } else {
+      screenTitle.value = StringConstants.kAllTasks;
     }
   }
 
@@ -61,12 +102,11 @@ class TaskListController extends GetxController {
     tasks.assignAll(await _service.getTasksByPeriod(currentFilter.value));
   }
 
-  /// Toggles task completion state for the item at [index].
-  void toggleTaskCompletion(int index) {
-    if (index >= 0 && index < tasks.length) {
-      final task = tasks[index];
-      task.isCompleted = !task.isCompleted;
-      tasks[index] = task;
+  /// Toggles task completion state for the given [task].
+  void toggleTaskCompletion(TaskModel task) {
+    final index = tasks.indexWhere((t) => t.id == task.id);
+    if (index != -1) {
+      tasks[index].isCompleted = !tasks[index].isCompleted;
       tasks.refresh();
     }
   }

@@ -192,7 +192,7 @@ class _AnimatedDonutRingState extends State<_AnimatedDonutRing>
                 painter: _DonutChartPainter(
                   percentage: currentProgress,
                   activeColor: currentColor,
-                  backgroundColor: const Color(0xFFE2E8F0),
+                  backgroundColor: currentColor.withValues(alpha: 0.15),
                   strokeWidth: 16,
                 ),
               ),
@@ -201,10 +201,10 @@ class _AnimatedDonutRingState extends State<_AnimatedDonutRing>
                 children: [
                   Text(
                     "$animatedPercentInt%",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.w900,
-                      color: Color(0xFF0F172A),
+                      color: currentColor,
                       height: 1.0,
                     ),
                   ),
@@ -261,8 +261,7 @@ class _DonutChartPainter extends CustomPainter {
       ..color = backgroundColor
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke
-      ..isAntiAlias = true
-      ..strokeCap = StrokeCap.round;
+      ..isAntiAlias = true;
 
     canvas.drawCircle(center, radius, bgPaint);
 
@@ -291,6 +290,8 @@ class _DonutChartPainter extends CustomPainter {
   /// Determines if the chart painter needs to repaint when properties change.
   @override
   bool shouldRepaint(covariant _DonutChartPainter oldDelegate) {
-    return oldDelegate.percentage != percentage || oldDelegate.activeColor != activeColor;
+    return oldDelegate.percentage != percentage ||
+        oldDelegate.activeColor != activeColor ||
+        oldDelegate.backgroundColor != backgroundColor;
   }
 }

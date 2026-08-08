@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import '../../core/routing/app_routes.dart';
+import '../../../core/routing/app_routes.dart';
 
 /// GetX Controller managing initialization and navigation for the Splash screen.
 class SplashController extends GetxController {

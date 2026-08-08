@@ -1,45 +1,167 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
+# ============================================================
+# Flutter / Dart
+# ============================================================
 
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
-/coverage/
+build/
+coverage/
 
-# Symbolication related
-app.*.symbols
+# Generated Flutter files
+**/GeneratedPluginRegistrant.*
+**/generated_plugin_registrant.dart
 
-# Obfuscation related
-app.*.map.json
+# ============================================================
+# Android
+# ============================================================
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+android/.gradle/
+android/local.properties
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# Android generated/build files
+android/.idea/
+android/captures/
+android/gradle/
+android/app/.cxx/
+
+# Android signing keys - NEVER commit these
+*.jks
+*.keystore
+*.keystore.properties
+
+# Android generated files
+android/key.properties
+
+# ============================================================
+# iOS
+# ============================================================
+
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/ephemeral/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/App.framework
+
+# iOS build files
+ios/build/
+ios/DerivedData/
+
+# iOS signing / provisioning files - NEVER commit
+*.mobileprovision
+*.p12
+*.cer
+
+# ============================================================
+# Firebase
+# ============================================================
+
+firebase-debug.log
+firestore-debug.log
+firebase-debug.*.log
+
+# Firebase local emulator data
+.firebase/
+
+# ============================================================
+# Environment / Secrets
+# ============================================================
+
+.env
+.env.*
+*.env
+
+# Local secret/config files
+secrets/
+secrets.*
+config/secrets/
+config/*.json
+
+# API keys / credentials
+*.pem
+*.key
+credentials.json
+service-account.json
+
+# ============================================================
+# Logs
+# ============================================================
+
+*.log
+logs/
+
+# ============================================================
+# IDEs
+# ============================================================
+
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# VS Code workspace files
+*.code-workspace
+
+# ============================================================
+# macOS / Windows
+# ============================================================
+
+.DS_Store
+.DS_Store?
+Thumbs.db
+Desktop.ini
+
+# ============================================================
+# Compiled / Binary Files
+# ============================================================
+
+*.class
+*.jar
+*.war
+*.exe
+*.dll
+*.so
+*.dylib
+*.app
+*.dmg
+
+# ============================================================
+# Maven / Java
+# ============================================================
+
+target/
+
+# ============================================================
+# Test Reports
+# ============================================================
+
+TEST*.xml
+
+# ============================================================
+# Large Media Files
+# ============================================================
+
+*.tiff
+*.avi
+*.flv
+*.mov
+*.wmv
+
+# ============================================================
+# Temporary / Backup Files
+# ============================================================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~

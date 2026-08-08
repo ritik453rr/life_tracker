@@ -23,11 +23,16 @@ class TaskListService {
         totalTasks: 15,
         periodSubtitle: "15 tasks expired and pending review",
       );
+    } else if (upperFilter == StringConstants.kToday) {
+      return FocusSummaryModel(
+        totalTasks: 12,
+        periodSubtitle: StringConstants.kScheduledForPeriod,
+      );
     }
-    // Default to TODAY
+    // Default to ALL
     return FocusSummaryModel(
-      totalTasks: 12,
-      periodSubtitle: StringConstants.kScheduledForPeriod,
+      totalTasks: 259,
+      periodSubtitle: "All 259 tasks scheduled across all periods",
     );
   }
 
@@ -35,95 +40,7 @@ class TaskListService {
   Future<List<TaskModel>> getTasksByPeriod(String filter) async {
     final upperFilter = filter.toUpperCase();
 
-    if (upperFilter == StringConstants.kWeek) {
-      return [
-        TaskModel(
-          id: "w1",
-          title: "Sprint Planning",
-          category: "WORK",
-          date: "26 July 2026",
-          categoryColor: const Color(0xFF0066CC),
-          isCompleted: false,
-        ),
-        TaskModel(
-          id: "w2",
-          title: "Team Sync & Catchup",
-          category: "WORK",
-          date: "27 July 2026",
-          categoryColor: const Color(0xFF0066CC),
-          isCompleted: false,
-        ),
-        TaskModel(
-          id: "w3",
-          title: "Weekly Cardio Workout",
-          category: "HEALTH",
-          date: "28 July 2026",
-          categoryColor: const Color(0xFF0F9D58),
-          isCompleted: false,
-        ),
-        TaskModel(
-          id: "w4",
-          title: "Family Dinner",
-          category: "PERSONAL",
-          date: "29 July 2026",
-          categoryColor: const Color(0xFF9E6D00),
-          isCompleted: false,
-        ),
-      ];
-    } else if (upperFilter == StringConstants.kMonth) {
-      return [
-        TaskModel(
-          id: "m1",
-          title: "Monthly Budget Audit",
-          category: "PERSONAL",
-          date: "01 August 2026",
-          categoryColor: const Color(0xFF9E6D00),
-          isCompleted: false,
-        ),
-        TaskModel(
-          id: "m2",
-          title: "Architecture Refactoring",
-          category: "WORK",
-          date: "05 August 2026",
-          categoryColor: const Color(0xFF0066CC),
-          isCompleted: false,
-        ),
-        TaskModel(
-          id: "m3",
-          title: "Health Checkup",
-          category: "HEALTH",
-          date: "12 August 2026",
-          categoryColor: const Color(0xFF0F9D58),
-          isCompleted: false,
-        ),
-      ];
-    } else if (upperFilter == StringConstants.kExpired) {
-      return [
-        TaskModel(
-          id: "e1",
-          title: "Quarterly Tax Filing",
-          category: "WORK",
-          date: "15 July 2026",
-          categoryColor: const Color(0xFFEF4444),
-          badgeColor: const Color(0xFFEF4444),
-          timeLeft: "EXPIRED",
-          isCompleted: false,
-        ),
-        TaskModel(
-          id: "e2",
-          title: "Dentist Appointment",
-          category: "HEALTH",
-          date: "18 July 2026",
-          categoryColor: const Color(0xFFEF4444),
-          badgeColor: const Color(0xFFEF4444),
-          timeLeft: "EXPIRED",
-          isCompleted: false,
-        ),
-      ];
-    }
-
-    // Default to TODAY tasks
-    return [
+    final todayTasks = [
       TaskModel(
         id: "t1",
         title: "Q3 Strategy Alignment",
@@ -157,5 +74,103 @@ class TaskListService {
         isCompleted: false,
       ),
     ];
+
+    final weekTasks = [
+      TaskModel(
+        id: "w1",
+        title: "Sprint Planning",
+        category: "WORK",
+        date: "26 July 2026",
+        categoryColor: const Color(0xFF0066CC),
+        isCompleted: false,
+      ),
+      TaskModel(
+        id: "w2",
+        title: "Team Sync & Catchup",
+        category: "WORK",
+        date: "27 July 2026",
+        categoryColor: const Color(0xFF0066CC),
+        isCompleted: false,
+      ),
+      TaskModel(
+        id: "w3",
+        title: "Weekly Cardio Workout",
+        category: "HEALTH",
+        date: "28 July 2026",
+        categoryColor: const Color(0xFF0F9D58),
+        isCompleted: false,
+      ),
+      TaskModel(
+        id: "w4",
+        title: "Family Dinner",
+        category: "PERSONAL",
+        date: "29 July 2026",
+        categoryColor: const Color(0xFF9E6D00),
+        isCompleted: false,
+      ),
+    ];
+
+    final monthTasks = [
+      TaskModel(
+        id: "m1",
+        title: "Monthly Budget Audit",
+        category: "PERSONAL",
+        date: "01 August 2026",
+        categoryColor: const Color(0xFF9E6D00),
+        isCompleted: false,
+      ),
+      TaskModel(
+        id: "m2",
+        title: "Architecture Refactoring",
+        category: "WORK",
+        date: "05 August 2026",
+        categoryColor: const Color(0xFF0066CC),
+        isCompleted: false,
+      ),
+      TaskModel(
+        id: "m3",
+        title: "Health Checkup",
+        category: "HEALTH",
+        date: "12 August 2026",
+        categoryColor: const Color(0xFF0F9D58),
+        isCompleted: false,
+      ),
+    ];
+
+    final expiredTasks = [
+      TaskModel(
+        id: "e1",
+        title: "Quarterly Tax Filing",
+        category: "WORK",
+        date: "15 July 2026",
+        categoryColor: const Color(0xFFEF4444),
+        badgeColor: const Color(0xFFEF4444),
+        timeLeft: "EXPIRED",
+        isCompleted: false,
+      ),
+      TaskModel(
+        id: "e2",
+        title: "Dentist Appointment",
+        category: "HEALTH",
+        date: "18 July 2026",
+        categoryColor: const Color(0xFFEF4444),
+        badgeColor: const Color(0xFFEF4444),
+        timeLeft: "EXPIRED",
+        isCompleted: false,
+      ),
+    ];
+
+    if (upperFilter == StringConstants.kWeek) {
+      return weekTasks;
+    } else if (upperFilter == StringConstants.kMonth) {
+      return monthTasks;
+    } else if (upperFilter == StringConstants.kExpired) {
+      return expiredTasks;
+    } else if (upperFilter == StringConstants.kToday) {
+      return todayTasks;
+    }
+
+    // Default to ALL
+    return [...todayTasks, ...weekTasks, ...monthTasks, ...expiredTasks];
   }
 }

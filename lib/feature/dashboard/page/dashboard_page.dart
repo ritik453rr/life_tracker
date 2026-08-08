@@ -10,16 +10,14 @@ import '../widgets/yearly_progress_card.dart';
 
 /// Main Dashboard View Screen displaying progress, statistics, and upcoming tasks.
 class DashboardPage extends StatelessWidget {
-  /// Creates a [DashboardPage] instance.
-  const DashboardPage({super.key});
+  DashboardPage({super.key});
+
+  final controller = Get.find<DashboardController>();
 
   /// Builds the main Dashboard page structure using StatelessWidget and Get.find controller lookup.
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DashboardController>();
-
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
         child: Column(
           children: [
@@ -60,11 +58,11 @@ class DashboardPage extends StatelessWidget {
                         itemCount: controller.periodStats.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 1.8,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
+                              crossAxisCount: 2,
+                              childAspectRatio: 1.8,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                            ),
                         itemBuilder: (context, index) {
                           final stat = controller.periodStats[index];
                           return GestureDetector(
@@ -92,7 +90,10 @@ class DashboardPage extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () => Get.toNamed(AppRoutes.taskList),
+                          onPressed: () => Get.toNamed(
+                            AppRoutes.taskList,
+                            arguments: StringConstants.kAll,
+                          ),
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
                             minimumSize: const Size(0, 0),
@@ -121,7 +122,10 @@ class DashboardPage extends StatelessWidget {
                           final task = controller.upcomingTasks[index];
                           return TaskItemCard(
                             task: task,
-                            onToggle: () => controller.toggleTaskCompletion(index),
+                            onToggle: () =>
+                                controller.toggleTaskCompletion(index),
+                            onTap: () =>
+                                Get.toNamed(AppRoutes.createTask, arguments: task),
                           );
                         },
                       );
@@ -139,11 +143,7 @@ class DashboardPage extends StatelessWidget {
         backgroundColor: const Color(0xFF0066CC),
         elevation: 4,
         shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 28,
-        ),
+        child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
     );
   }

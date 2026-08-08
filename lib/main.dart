@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:life_tracker_flutter/core/constants/app_theme.dart';
 import 'package:life_tracker_flutter/core/routing/app_pages.dart';
 import 'package:life_tracker_flutter/core/routing/app_routes.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
     );

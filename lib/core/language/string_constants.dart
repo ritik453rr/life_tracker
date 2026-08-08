@@ -22,6 +22,7 @@ class StringConstants {
   static const String kToday = "TODAY";
   static const String kWeek = "WEEK";
   static const String kMonth = "MONTH";
+  static const String kAll = "ALL";
   static const String kUpcomingTasks = "Upcoming Tasks";
   static const String kViewAll = "View All";
 
@@ -41,6 +42,7 @@ class StringConstants {
   static const String kThisWeeksTasks = "This Week's Tasks";
   static const String kThisMonthsTasks = "This Month's Tasks";
   static const String kExpiredTasks = "Expired Tasks";
+  static const String kAllTasks = "All Tasks";
   static const String kActiveFocus = "ACTIVE FOCUS";
   static const String kTasks = "Tasks";
   static const String kScheduledForPeriod = "8 tasks scheduled for this period";

@@ -14,6 +14,9 @@ class TaskModel {
   /// Formatted date string of the task.
   final String date;
 
+  /// Optional description notes for the task.
+  final String? description;
+
   /// Optional time remaining or status badge text (e.g. "2H LEFT", "EXPIRED").
   final String? timeLeft;
 
@@ -32,6 +35,7 @@ class TaskModel {
     required this.title,
     required this.category,
     required this.date,
+    this.description,
     this.timeLeft,
     required this.categoryColor,
     this.badgeColor = const Color(0xFF0066CC),

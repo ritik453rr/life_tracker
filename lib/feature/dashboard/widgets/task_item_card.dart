@@ -9,11 +9,15 @@ class TaskItemCard extends StatelessWidget {
   /// Callback function triggered when the user toggles completion status.
   final VoidCallback onToggle;
 
-  /// Creates a [TaskItemCard] with [task] details and [onToggle] handler.
+  /// Optional callback function triggered when tapping the card to edit task.
+  final VoidCallback? onTap;
+
+  /// Creates a [TaskItemCard] with [task] details, [onToggle], and optional [onTap] handler.
   const TaskItemCard({
     super.key,
     required this.task,
     required this.onToggle,
+    this.onTap,
   });
 
   /// Builds the task item card with category accent strip, details, and optional checkbox button.
@@ -53,89 +57,93 @@ class TaskItemCard extends StatelessWidget {
                     children: [
                       // Information Side
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Category Tag
-                            Text(
-                              task.category,
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w800,
-                                color: task.categoryColor,
-                                letterSpacing: 0.6,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            // Task Title
-                            Text(
-                              task.title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: task.isCompleted
-                                    ? const Color(0xFF94A3B8)
-                                    : const Color(0xFF0F172A),
-                                decoration: task.isCompleted
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                                decorationColor: const Color(0xFF94A3B8),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            // Date & Time Left Row
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.calendar_today_outlined,
-                                  size: 13,
-                                  color: Color(0xFF94A3B8),
+                        child: GestureDetector(
+                          onTap: onTap,
+                          behavior: HitTestBehavior.opaque,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Category Tag
+                              Text(
+                                task.category,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                  color: task.categoryColor,
+                                  letterSpacing: 0.6,
                                 ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  task.date,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF64748B),
+                              ),
+                              const SizedBox(height: 4),
+                              // Task Title
+                              Text(
+                                task.title,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: task.isCompleted
+                                      ? const Color(0xFF94A3B8)
+                                      : const Color(0xFF0F172A),
+                                  decoration: task.isCompleted
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  decorationColor: const Color(0xFF94A3B8),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              // Date & Time Left Row
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.calendar_today_outlined,
+                                    size: 13,
+                                    color: Color(0xFF94A3B8),
                                   ),
-                                ),
-                                if (task.timeLeft != null) ...[
-                                  const SizedBox(width: 12),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 4,
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    task.date,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF64748B),
                                     ),
-                                    decoration: BoxDecoration(
-                                      color: task.badgeColor,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.access_time_rounded,
-                                          size: 12,
-                                          color: Colors.white,
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          task.timeLeft!,
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w800,
+                                  ),
+                                  if (task.timeLeft != null) ...[
+                                    const SizedBox(width: 12),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: task.badgeColor,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(
+                                            Icons.access_time_rounded,
+                                            size: 12,
                                             color: Colors.white,
-                                            letterSpacing: 0.3,
                                           ),
-                                        ),
-                                      ],
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            task.timeLeft!,
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.white,
+                                              letterSpacing: 0.3,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ],
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       // Checkbox Button (Only shown if task is NOT expired)
