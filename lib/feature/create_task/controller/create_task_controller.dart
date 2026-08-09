@@ -298,7 +298,7 @@ class CreateTaskController extends GetxController {
 
   @override
   void onClose() {
-    for (var item in taskItems) {
+    for (final item in taskItems) {
       item.dispose();
     }
     super.onClose();

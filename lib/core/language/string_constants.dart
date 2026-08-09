@@ -25,6 +25,7 @@ class StringConstants {
   static const String kAll = "ALL";
   static const String kUpcomingTasks = "Upcoming Tasks";
   static const String kViewAll = "View All";
+  static const String kTrackingSinceJan12024 = "TRACKING SINCE JAN 1, 2024";
 
   /// Create Task Labels
   static const String kCreateTask = "Create Task";
@@ -57,6 +58,7 @@ class StringConstants {
   static const String kScheduledForPeriod = "8 tasks scheduled for this period";
   static const String kNoMoreTasksToday = "No more tasks scheduled for today.";
   static const String kViewTomorrow = "View Tomorrow";
+  static const String kSearchTasks = "Search tasks...";
 
   /// Splash Screen Labels
   static const String kPoweredBy = "Powered by ";

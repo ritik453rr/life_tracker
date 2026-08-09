@@ -156,9 +156,9 @@ class CreateTaskPage extends StatelessWidget {
                               width: 1.5,
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children:  [
                               Icon(
                                 Icons.add,
                                 size: 18,

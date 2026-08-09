@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/language/string_constants.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../dashboard/widgets/task_item_card.dart';
 import '../controller/task_list_controller.dart';
@@ -117,8 +118,10 @@ class TaskListPage extends StatelessWidget {
 class _SearchBar extends StatelessWidget {
   final TaskListController controller;
 
+  /// Creates a [_SearchBar] instance with the required [controller].
   const _SearchBar({required this.controller});
 
+  /// Builds the search text input field with clear action.
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -148,7 +151,7 @@ class _SearchBar extends StatelessWidget {
               controller: controller.searchFieldController,
               onChanged: controller.onSearchChanged,
               decoration: const InputDecoration(
-                hintText: "Search tasks...",
+                hintText: StringConstants.kSearchTasks,
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
