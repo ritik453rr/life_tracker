@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/language/string_constants.dart';
 
 /// Task item model representing a task across the application.
 class TaskModel {
@@ -41,6 +42,16 @@ class TaskModel {
     this.badgeColor = const Color(0xFF0066CC),
     this.isCompleted = false,
   });
+
+  /// Getter returning display title: user title if present, otherwise excerpt from description, or fallback untitled.
+  String get displayTitle {
+    if (title.trim().isNotEmpty) return title.trim();
+    if (description != null && description!.trim().isNotEmpty) {
+      final firstLine = description!.trim().split('\n').first.trim();
+      return firstLine.length > 35 ? "${firstLine.substring(0, 35)}..." : firstLine;
+    }
+    return StringConstants.kUntitledTask;
+  }
 
   /// Helper getter returning true if the task is marked as expired.
   bool get isExpired => timeLeft?.toUpperCase() == "EXPIRED";

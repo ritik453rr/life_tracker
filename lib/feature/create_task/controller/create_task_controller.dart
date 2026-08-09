@@ -223,15 +223,6 @@ class CreateTaskController extends GetxController {
       final rawTitle = item.titleController.text.trim();
       final rawDesc = item.descriptionController.text.trim();
 
-      String computedTitle = rawTitle;
-      if (computedTitle.isEmpty && rawDesc.isNotEmpty) {
-        final firstLine = rawDesc.split('\n').first.trim();
-        computedTitle = firstLine.length > 35 ? "${firstLine.substring(0, 35)}..." : firstLine;
-      }
-      if (computedTitle.isEmpty) {
-        computedTitle = StringConstants.kUntitledTask;
-      }
-
       if (Get.isRegistered<DashboardController>()) {
         final dashboardCtrl = Get.find<DashboardController>();
         final idx = dashboardCtrl.upcomingTasks.indexWhere((t) => t.id == editingTaskId);
@@ -239,7 +230,7 @@ class CreateTaskController extends GetxController {
           final oldTask = dashboardCtrl.upcomingTasks[idx];
           dashboardCtrl.upcomingTasks[idx] = TaskModel(
             id: editingTaskId!,
-            title: computedTitle,
+            title: rawTitle,
             category: item.category.toUpperCase(),
             date: formattedDate,
             description: rawDesc.isEmpty ? null : rawDesc,
@@ -259,7 +250,7 @@ class CreateTaskController extends GetxController {
           final oldTask = taskListCtrl.tasks[idx];
           taskListCtrl.tasks[idx] = TaskModel(
             id: editingTaskId!,
-            title: computedTitle,
+            title: rawTitle,
             category: item.category.toUpperCase(),
             date: formattedDate,
             description: rawDesc.isEmpty ? null : rawDesc,

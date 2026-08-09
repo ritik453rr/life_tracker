@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import '../model/dashboard_model.dart';
 import '../service/dashboard_service.dart';
 
+import '../../task_list/controller/task_list_controller.dart';
+
 /// GetX Controller managing state for the Dashboard feature.
 class DashboardController extends GetxController {
   final DashboardService _service = DashboardService();
@@ -28,6 +30,24 @@ class DashboardController extends GetxController {
       task.isCompleted = !task.isCompleted;
       upcomingTasks[index] = task;
       upcomingTasks.refresh();
+    }
+  }
+
+  /// Removes a task from upcoming tasks list and updates stat summary counters.
+  void deleteTask(TaskModel task) {
+    upcomingTasks.removeWhere((t) => t.id == task.id);
+    if (Get.isRegistered<TaskListController>()) {
+      Get.find<TaskListController>().tasks.removeWhere((t) => t.id == task.id);
+    }
+    if (summary.value != null) {
+      final oldSum = summary.value!;
+      summary.value = StatSummaryModel(
+        total: oldSum.total > 0 ? oldSum.total - 1 : 0,
+        done: task.isCompleted ? (oldSum.done > 0 ? oldSum.done - 1 : 0) : oldSum.done,
+        pending: !task.isCompleted ? (oldSum.pending > 0 ? oldSum.pending - 1 : 0) : oldSum.pending,
+        expired: task.isExpired ? (oldSum.expired > 0 ? oldSum.expired - 1 : 0) : oldSum.expired,
+        efficiencyPercentage: oldSum.efficiencyPercentage,
+      );
     }
   }
 }

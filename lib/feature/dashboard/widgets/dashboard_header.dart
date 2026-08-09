@@ -6,7 +6,9 @@ class DashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Container(
+      color: Colors.white,
+      child: Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
@@ -73,6 +75,7 @@ class DashboardHeader extends StatelessWidget {
           color: Color(0xFFE2E8F0),
         ),
       ],
+    ),
     );
   }
 }

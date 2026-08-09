@@ -56,24 +56,28 @@ class TaskListPage extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 16.0,
-                ),
+                clipBehavior: Clip.none,
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Column(
                   children: [
                     // Interactive Search Bar Widget
-                    _SearchBar(controller: controller),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: _SearchBar(controller: controller),
+                    ),
                     const SizedBox(height: 16),
 
                     // Active Focus Card
-                    Obx(() {
-                      final summary = controller.focusSummary.value;
-                      if (summary == null) {
-                        return const SizedBox.shrink();
-                      }
-                      return ActiveFocusCard(summary: summary);
-                    }),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Obx(() {
+                        final summary = controller.focusSummary.value;
+                        if (summary == null) {
+                          return const SizedBox.shrink();
+                        }
+                        return ActiveFocusCard(summary: summary);
+                      }),
+                    ),
                     const SizedBox(height: 20),
 
                     // Task List Items
@@ -92,6 +96,7 @@ class TaskListPage extends StatelessWidget {
                             task: task,
                             onToggle: () => controller.toggleTaskCompletion(task),
                             onTap: () => Get.toNamed(AppRoutes.createTask, arguments: task),
+                            onDelete: () => controller.deleteTask(task),
                           );
                         },
                       );
@@ -102,17 +107,6 @@ class TaskListPage extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(AppRoutes.createTask),
-        backgroundColor: const Color(0xFF0066CC),
-        elevation: 4,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 28,
         ),
       ),
     );

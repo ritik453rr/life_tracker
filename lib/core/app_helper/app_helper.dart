@@ -1,26 +1,27 @@
-import 'package:connecteo/connecteo.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-import 'common_ui.dart';
+import '../common_widgets/app_snackbar.dart';
 import '../language/string_constants.dart';
 
-/// Provides global utility functions used across the application.
-class Global {
-  static final connecteo = ConnectionChecker();
+/// Provides helper utility functions used across the application.
+class AppHelper {
+  static final _connectivity = Connectivity();
   static var isInternetConnect = false.obs;
-  static bool isSessionExpired=false;
+  static bool isSessionExpired = false;
 
   /// Checks internet connectivity, updates state, and optionally shows an error message.
   static Future<bool> checkInternet({bool showMsg = true}) async {
-    final status = await connecteo.isConnected;
+    final results = await _connectivity.checkConnectivity();
+    final isConnected = results.any((result) => result != ConnectivityResult.none);
 
-    if (status) {
+    if (isConnected) {
       isInternetConnect.value = true;
       return true;
     } else {
       isInternetConnect.value = false;
 
       if (showMsg) {
-        CommonUI.showApiSnackBar(
+        AppSnackBar.showApiSnackBar(
           isSuccess: false,
           message: StringConstants.kCheckInternetConnection.tr,
         );

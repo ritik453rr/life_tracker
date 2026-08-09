@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import '../model/dashboard_model.dart';
 
-/// Task item card widget displaying task details and completion toggle.
+/// Task item card widget displaying task details, completion toggle, and optional slide-to-delete.
 class TaskItemCard extends StatelessWidget {
   /// The task model containing title, category, date, and completion status.
   final TaskModel task;
@@ -12,19 +13,21 @@ class TaskItemCard extends StatelessWidget {
   /// Optional callback function triggered when tapping the card to edit task.
   final VoidCallback? onTap;
 
-  /// Creates a [TaskItemCard] with [task] details, [onToggle], and optional [onTap] handler.
+  /// Optional callback function triggered when sliding to delete the task.
+  final VoidCallback? onDelete;
+
+  /// Creates a [TaskItemCard] with [task] details, [onToggle], optional [onTap], and optional [onDelete] handler.
   const TaskItemCard({
     super.key,
     required this.task,
     required this.onToggle,
     this.onTap,
+    this.onDelete,
   });
 
-  /// Builds the task item card with category accent strip, details, and optional checkbox button.
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildCard({EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 16.0)}) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12.0),
+      margin: margin,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -76,7 +79,7 @@ class TaskItemCard extends StatelessWidget {
                               const SizedBox(height: 4),
                               // Task Title
                               Text(
-                                task.title,
+                                task.displayTitle,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -184,6 +187,65 @@ class TaskItemCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  /// Builds the task item card with category accent strip, details, and optional slide-to-delete wrapper.
+  @override
+  Widget build(BuildContext context) {
+    if (onDelete == null) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 12.0),
+        child: _buildCard(),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Slidable(
+        key: ValueKey(task.id),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          extentRatio: 0.25,
+          children: [
+            CustomSlidableAction(
+              onPressed: (_) => onDelete?.call(),
+              backgroundColor: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0, left: 6.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEF4444),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.delete_outline_rounded,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          'Delete',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        child: _buildCard(),
       ),
     );
   }

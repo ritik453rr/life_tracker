@@ -2,7 +2,6 @@ import 'package:life_tracker_flutter/feature/create_task/model/create_task_model
 
 import '../../dashboard/model/dashboard_model.dart';
 import 'package:flutter/material.dart';
-import '../../../core/language/string_constants.dart';
 
 /// Feature service handling task creation operations.
 class CreateTaskService {
@@ -47,20 +46,9 @@ class CreateTaskService {
           final rawTitle = item.titleController.text.trim();
           final rawDesc = item.descriptionController.text.trim();
 
-          String computedTitle = rawTitle;
-          if (computedTitle.isEmpty && rawDesc.isNotEmpty) {
-            final firstLine = rawDesc.split('\n').first.trim();
-            computedTitle = firstLine.length > 35
-                ? "${firstLine.substring(0, 35)}..."
-                : firstLine;
-          }
-          if (computedTitle.isEmpty) {
-            computedTitle = StringConstants.kUntitledTask;
-          }
-
           return TaskModel(
             id: item.id,
-            title: computedTitle,
+            title: rawTitle,
             category: categoryUpper,
             date: formattedDate,
             description: rawDesc.isEmpty ? null : rawDesc,

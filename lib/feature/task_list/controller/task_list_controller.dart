@@ -5,6 +5,8 @@ import '../model/task_list_model.dart';
 import '../service/task_list_service.dart';
 import '../../dashboard/model/dashboard_model.dart';
 
+import '../../dashboard/controller/dashboard_controller.dart';
+
 /// GetX Controller managing state for the common Task List screen.
 class TaskListController extends GetxController {
   final TaskListService _service = TaskListService();
@@ -34,9 +36,11 @@ class TaskListController extends GetxController {
       return tasks;
     }
     return tasks.where((task) {
-      final titleMatch = task.title.toLowerCase().contains(query);
+      final titleMatch = task.displayTitle.toLowerCase().contains(query) ||
+          task.title.toLowerCase().contains(query);
+      final descMatch = task.description?.toLowerCase().contains(query) ?? false;
       final categoryMatch = task.category.toLowerCase().contains(query);
-      return titleMatch || categoryMatch;
+      return titleMatch || descMatch || categoryMatch;
     }).toList();
   }
 
@@ -108,6 +112,15 @@ class TaskListController extends GetxController {
     if (index != -1) {
       tasks[index].isCompleted = !tasks[index].isCompleted;
       tasks.refresh();
+    }
+  }
+
+  /// Removes task from tasks list and syncs with DashboardController if present.
+  void deleteTask(TaskModel task) {
+    tasks.removeWhere((t) => t.id == task.id);
+    tasks.refresh();
+    if (Get.isRegistered<DashboardController>()) {
+      Get.find<DashboardController>().deleteTask(task);
     }
   }
 }
