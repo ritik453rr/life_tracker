@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../../../core/routing/app_routes.dart';
 import '../controller/dashboard_controller.dart';
@@ -48,7 +49,7 @@ class DashboardPage extends StatelessWidget {
                         );
                       }),
                     ),
-                    const SizedBox(height: 16),
+                    16.h,
 
                     // Period Stats Grid (TODAY, WEEK, MONTH, EXPIRED)
                     Padding(
@@ -78,7 +79,7 @@ class DashboardPage extends StatelessWidget {
                         );
                       }),
                     ),
-                    const SizedBox(height: 24),
+                    24.h,
 
                     // Upcoming Tasks Header
                     Padding(
@@ -116,7 +117,7 @@ class DashboardPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 14),
+                    14.h,
 
                     // Task Items List
                     Obx(() {
@@ -137,7 +138,7 @@ class DashboardPage extends StatelessWidget {
                         },
                       );
                     }),
-                    const SizedBox(height: 40),
+                    40.h,
                   ],
                 ),
               ),

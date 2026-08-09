@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../core/extension/sized_box_extension.dart';
+import '../../../core/language/string_constants.dart';
 
 /// Bottom Navigation Bar matching design screenshot (Home, Tasks, Growth, Profile).
 class TaskListBottomNav extends StatelessWidget {
@@ -14,10 +16,10 @@ class TaskListBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navItems = [
-      _NavItem(icon: Icons.grid_view_rounded, activeIcon: Icons.grid_view_rounded, label: "Home"),
-      _NavItem(icon: Icons.checklist_rtl_rounded, activeIcon: Icons.checklist_rtl_rounded, label: "Tasks"),
-      _NavItem(icon: Icons.trending_up_rounded, activeIcon: Icons.trending_up_rounded, label: "Growth"),
-      _NavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: "Profile"),
+      _NavItem(icon: Icons.grid_view_rounded, activeIcon: Icons.grid_view_rounded, label: StringConstants.kHome),
+      _NavItem(icon: Icons.checklist_rtl_rounded, activeIcon: Icons.checklist_rtl_rounded, label: StringConstants.kTasks),
+      _NavItem(icon: Icons.trending_up_rounded, activeIcon: Icons.trending_up_rounded, label: StringConstants.kGrowth),
+      _NavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: StringConstants.kProfile),
     ];
 
     return Container(
@@ -67,7 +69,7 @@ class TaskListBottomNav extends StatelessWidget {
                       color: isSelected ? Colors.white : const Color(0xFF64748B),
                     ),
                     if (isSelected) ...[
-                      const SizedBox(width: 6),
+                      6.w,
                       Text(
                         item.label,
                         style: const TextStyle(
@@ -77,7 +79,7 @@ class TaskListBottomNav extends StatelessWidget {
                         ),
                       ),
                     ] else ...[
-                      const SizedBox(height: 2),
+                      2.h,
                     ],
                   ],
                 ),

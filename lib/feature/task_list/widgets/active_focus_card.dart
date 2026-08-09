@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../model/task_list_model.dart';
 
@@ -54,7 +55,7 @@ class ActiveFocusCard extends StatelessWidget {
                   letterSpacing: 0.8,
                 ),
               ),
-              const SizedBox(height: 6),
+              6.h,
               Text(
                 "${summary.totalTasks} ${StringConstants.kTasks}",
                 style: const TextStyle(
@@ -64,7 +65,7 @@ class ActiveFocusCard extends StatelessWidget {
                   letterSpacing: -0.5,
                 ),
               ),
-              const SizedBox(height: 4),
+              4.h,
               Text(
                 summary.periodSubtitle,
                 style: const TextStyle(

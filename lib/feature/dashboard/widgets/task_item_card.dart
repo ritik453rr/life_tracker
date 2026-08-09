@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import '../../../core/extension/sized_box_extension.dart';
+import '../../../core/language/string_constants.dart';
 import '../model/dashboard_model.dart';
 
 /// Task item card widget displaying task details, completion toggle, and optional slide-to-delete.
@@ -76,7 +78,7 @@ class TaskItemCard extends StatelessWidget {
                                   letterSpacing: 0.6,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              4.h,
                               // Task Title
                               Text(
                                 task.displayTitle,
@@ -92,7 +94,7 @@ class TaskItemCard extends StatelessWidget {
                                   decorationColor: const Color(0xFF94A3B8),
                                 ),
                               ),
-                              const SizedBox(height: 10),
+                              10.h,
                               // Date & Time Left Row
                               Row(
                                 children: [
@@ -101,7 +103,7 @@ class TaskItemCard extends StatelessWidget {
                                     size: 13,
                                     color: Color(0xFF94A3B8),
                                   ),
-                                  const SizedBox(width: 5),
+                                  5.w,
                                   Text(
                                     task.date,
                                     style: const TextStyle(
@@ -111,7 +113,7 @@ class TaskItemCard extends StatelessWidget {
                                     ),
                                   ),
                                   if (task.timeLeft != null) ...[
-                                    const SizedBox(width: 12),
+                                    12.w,
                                     Container(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 10,
@@ -129,7 +131,7 @@ class TaskItemCard extends StatelessWidget {
                                             size: 12,
                                             color: Colors.white,
                                           ),
-                                          const SizedBox(width: 4),
+                                          4.w,
                                           Text(
                                             task.timeLeft!,
                                             style: const TextStyle(
@@ -151,7 +153,7 @@ class TaskItemCard extends StatelessWidget {
                       ),
                       // Checkbox Button (Only shown if task is NOT expired)
                       if (!task.isExpired) ...[
-                        const SizedBox(width: 12),
+                        12.w,
                         GestureDetector(
                           onTap: onToggle,
                           child: AnimatedContainer(
@@ -219,18 +221,18 @@ class TaskItemCard extends StatelessWidget {
                     color: const Color(0xFFEF4444),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.delete_outline_rounded,
                           color: Colors.white,
                           size: 22,
                         ),
-                        SizedBox(height: 2),
-                        Text(
-                          'Delete',
+                        2.h,
+                        const Text(
+                          StringConstants.kDelete,
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,

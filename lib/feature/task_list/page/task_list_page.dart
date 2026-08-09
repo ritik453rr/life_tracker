@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../dashboard/widgets/task_item_card.dart';
@@ -33,7 +34,7 @@ class TaskListPage extends StatelessWidget {
                       color: Color(0xFF0066CC),
                     ),
                   ),
-                  const SizedBox(width: 14),
+                  14.w,
                   Obx(() {
                     return Text(
                       controller.screenTitle.value,
@@ -66,7 +67,7 @@ class TaskListPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: _SearchBar(controller: controller),
                     ),
-                    const SizedBox(height: 16),
+                    16.h,
 
                     // Active Focus Card
                     Padding(
@@ -79,7 +80,7 @@ class TaskListPage extends StatelessWidget {
                         return ActiveFocusCard(summary: summary);
                       }),
                     ),
-                    const SizedBox(height: 20),
+                    20.h,
 
                     // Task List Items
                     Obx(() {
@@ -102,7 +103,7 @@ class TaskListPage extends StatelessWidget {
                         },
                       );
                     }),
-                    const SizedBox(height: 40),
+                    40.h,
                   ],
                 ),
               ),
@@ -145,7 +146,7 @@ class _SearchBar extends StatelessWidget {
             color: Color(0xFF94A3B8),
             size: 20,
           ),
-          const SizedBox(width: 10),
+          10.w,
           Expanded(
             child: TextField(
               controller: controller.searchFieldController,

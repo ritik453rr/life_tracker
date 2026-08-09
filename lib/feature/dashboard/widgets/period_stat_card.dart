@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../model/dashboard_model.dart';
 
@@ -49,7 +50,7 @@ class PeriodStatCard extends StatelessWidget {
                   letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(height: 6),
+              6.h,
               Text(
                 "${stat.count}",
                 style: TextStyle(

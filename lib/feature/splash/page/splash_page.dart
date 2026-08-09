@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/assets.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../controller/splash_controller.dart';
 
@@ -33,7 +34,7 @@ class SplashPage extends StatelessWidget {
                     height: 170,
                     fit: BoxFit.contain,
                   ),
-                  const SizedBox(height: 36),
+                  36.h,
 
                   // LifeTracker Title
                   const Text(

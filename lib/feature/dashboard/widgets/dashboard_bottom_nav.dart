@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../core/extension/sized_box_extension.dart';
+import '../../../core/language/string_constants.dart';
 
 /// Custom bottom navigation bar with active tab pill styling.
 class DashboardBottomNav extends StatelessWidget {
@@ -14,10 +16,10 @@ class DashboardBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navItems = [
-      _NavItem(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: "HOME"),
-      _NavItem(icon: Icons.calendar_month_outlined, activeIcon: Icons.calendar_month, label: "CALENDAR"),
-      _NavItem(icon: Icons.bar_chart_rounded, activeIcon: Icons.bar_chart, label: "STATS"),
-      _NavItem(icon: Icons.settings_outlined, activeIcon: Icons.settings, label: "SETTINGS"),
+      _NavItem(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: StringConstants.kHomeNav),
+      _NavItem(icon: Icons.calendar_month_outlined, activeIcon: Icons.calendar_month, label: StringConstants.kCalendarNav),
+      _NavItem(icon: Icons.bar_chart_rounded, activeIcon: Icons.bar_chart, label: StringConstants.kStatsNav),
+      _NavItem(icon: Icons.settings_outlined, activeIcon: Icons.settings, label: StringConstants.kSettingsNav),
     ];
 
     return Container(
@@ -68,7 +70,7 @@ class DashboardBottomNav extends StatelessWidget {
                           ? const Color(0xFF0066CC)
                           : const Color(0xFF64748B),
                     ),
-                    const SizedBox(height: 3),
+                    3.h,
                     Text(
                       item.label,
                       style: TextStyle(

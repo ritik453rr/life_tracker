@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../controller/create_task_controller.dart';
 import '../widgets/task_form_card.dart';
@@ -35,7 +36,7 @@ class CreateTaskPage extends StatelessWidget {
                       color: Color(0xFF0066CC),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  16.w,
                   Obx(() {
                     return Text(
                       controller.isEditing.value ? StringConstants.kEditTask : StringConstants.kCreateTask,
@@ -73,7 +74,7 @@ class CreateTaskPage extends StatelessWidget {
                         letterSpacing: 0.6,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    8.h,
                     Obx(() {
                       final date = controller.selectedDate.value;
                       final formattedDate =
@@ -115,7 +116,7 @@ class CreateTaskPage extends StatelessWidget {
                         ),
                       );
                     }),
-                    const SizedBox(height: 20),
+                    20.h,
 
                     // List of Task Form Cards
                     Obx(() {
@@ -156,16 +157,16 @@ class CreateTaskPage extends StatelessWidget {
                               width: 1.5,
                             ),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children:  [
-                              Icon(
+                            children: [
+                              const Icon(
                                 Icons.add,
                                 size: 18,
                                 color: Color(0xFF0066CC),
                               ),
-                              SizedBox(width: 6),
-                              Text(
+                              6.w,
+                              const Text(
                                 StringConstants.kAddAnotherTask,
                                 style: TextStyle(
                                   fontSize: 14,
@@ -178,7 +179,7 @@ class CreateTaskPage extends StatelessWidget {
                         ),
                       );
                     }),
-                    const SizedBox(height: 32),
+                    32.h,
 
                     // Create / Update Tasks Submit Button
                     SizedBox(
@@ -210,7 +211,7 @@ class CreateTaskPage extends StatelessWidget {
                         );
                       }),
                     ),
-                    const SizedBox(height: 20),
+                    20.h,
                   ],
                 ),
               ),

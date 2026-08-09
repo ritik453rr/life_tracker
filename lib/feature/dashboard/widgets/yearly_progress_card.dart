@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../model/dashboard_model.dart';
 
@@ -44,10 +45,10 @@ class YearlyProgressCard extends StatelessWidget {
               color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 20),
+          20.h,
           // Animated Donut Ring Indicator starting strictly from 0 with 2-second smooth curve
           _AnimatedDonutRing(targetPercentage: targetPercentage),
-          const SizedBox(height: 28),
+          28.h,
           // Bottom Stats Row with Static Number Display
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,7 +79,7 @@ class YearlyProgressCard extends StatelessWidget {
             color: valueColor,
           ),
         ),
-        const SizedBox(height: 4),
+        4.h,
         Text(
           label,
           style: const TextStyle(
@@ -208,7 +209,7 @@ class _AnimatedDonutRingState extends State<_AnimatedDonutRing>
                       height: 1.0,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  4.h,
                   Text(
                     StringConstants.kEfficiency,
                     style: TextStyle(

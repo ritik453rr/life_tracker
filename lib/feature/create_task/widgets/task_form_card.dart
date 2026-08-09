@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../core/extension/sized_box_extension.dart';
+import '../../../core/language/string_constants.dart';
 import '../../../core/common_widgets/app_drop_down_button.dart';
 import '../model/create_task_model.dart';
 
@@ -55,7 +57,7 @@ class TaskFormCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "TASK $taskIndex",
+                            "${StringConstants.kTaskUpper} $taskIndex",
                             style: const TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w800,
@@ -74,11 +76,11 @@ class TaskFormCard extends StatelessWidget {
                             ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      16.h,
 
                       // Task Title Input Field
                       const Text(
-                        "TASK TITLE",
+                        StringConstants.kTaskTitle,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w800,
@@ -86,7 +88,7 @@ class TaskFormCard extends StatelessWidget {
                           letterSpacing: 0.6,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      8.h,
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -104,7 +106,7 @@ class TaskFormCard extends StatelessWidget {
                             color: Color(0xFF0F172A),
                           ),
                           decoration: const InputDecoration(
-                            hintText: "What needs to be done?",
+                            hintText: StringConstants.kWhatNeedsToBeDone,
                             hintStyle: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
@@ -118,11 +120,11 @@ class TaskFormCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      16.h,
 
                       // Description & Notes Input Field
                       const Text(
-                        "DESCRIPTION & NOTES",
+                        StringConstants.kDescriptionNotes,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w800,
@@ -130,7 +132,7 @@ class TaskFormCard extends StatelessWidget {
                           letterSpacing: 0.6,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      8.h,
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -149,7 +151,7 @@ class TaskFormCard extends StatelessWidget {
                             color: Color(0xFF0F172A),
                           ),
                           decoration: const InputDecoration(
-                            hintText: "Add some details about this task...",
+                            hintText: StringConstants.kAddDetails,
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -160,11 +162,11 @@ class TaskFormCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      16.h,
 
                       // Category Dropdown Field
                       const Text(
-                        "CATEGORY",
+                        StringConstants.kCategory,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w800,
@@ -172,7 +174,7 @@ class TaskFormCard extends StatelessWidget {
                           letterSpacing: 0.6,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      8.h,
                       AppDropDownButton<String>(
                         value: item.category,
                         options: categoryOptions,

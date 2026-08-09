@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 
 /// Top header widget displaying user avatar, LifeTracker app title, and tracking subtitle.
@@ -43,12 +44,12 @@ class DashboardHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 14),
+                14.w,
                 // App Title & Subtitle
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       StringConstants.kLifeTracker,
                       style: TextStyle(
                         fontSize: 22,
@@ -57,8 +58,8 @@ class DashboardHeader extends StatelessWidget {
                         letterSpacing: -0.3,
                       ),
                     ),
-                    SizedBox(height: 2),
-                    Text(
+                    2.h,
+                    const Text(
                       StringConstants.kTrackingSinceJan12024,
                       style: TextStyle(
                         fontSize: 10,

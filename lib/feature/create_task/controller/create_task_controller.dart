@@ -111,7 +111,7 @@ class CreateTaskController extends GetxController {
       isEditing.value = true;
       editingTaskId = args.id;
 
-      String category = "General";
+      String category = StringConstants.kGeneral;
       for (final option in categoryOptions) {
         if (option.toUpperCase() == args.category.toUpperCase()) {
           category = option;

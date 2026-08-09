@@ -63,4 +63,17 @@ class StringConstants {
   /// Splash Screen Labels
   static const String kPoweredBy = "Powered by ";
   static const String kDesignOps = "Design Ops";
+
+  /// Navigation Labels
+  static const String kHomeNav = "HOME";
+  static const String kCalendarNav = "CALENDAR";
+  static const String kStatsNav = "STATS";
+  static const String kSettingsNav = "SETTINGS";
+  static const String kHome = "Home";
+  static const String kGrowth = "Growth";
+  static const String kProfile = "Profile";
+
+  /// Task Actions & Labels
+  static const String kDelete = "Delete";
+  static const String kTaskUpper = "TASK";
 }
