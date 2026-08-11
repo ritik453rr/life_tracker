@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import '../../../core/common_widgets/app_checkbox.dart';
 import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../model/dashboard_model.dart';
@@ -112,74 +114,26 @@ class TaskItemCard extends StatelessWidget {
                                       color: Color(0xFF64748B),
                                     ),
                                   ),
-                                  if (task.timeLeft != null) ...[
-                                    12.w,
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 4,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: task.badgeColor,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Icon(
-                                            Icons.access_time_rounded,
-                                            size: 12,
-                                            color: Colors.white,
-                                          ),
-                                          4.w,
-                                          Text(
-                                            task.timeLeft!,
-                                            style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w800,
-                                              color: Colors.white,
-                                              letterSpacing: 0.3,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                  12.w,
+                                  Visibility(
+                                    visible: !task.isCompleted,
+                                    maintainSize: true,
+                                    maintainAnimation: true,
+                                    maintainState: true,
+                                    child: _RealTimeBadge(task: task),
+                                  ),
                                 ],
                               ),
                             ],
                           ),
                         ),
                       ),
-                      // Checkbox Button (Only shown if task is NOT expired)
-                      if (!task.isExpired) ...[
+                      // Checkbox Button (Shown if NOT expired, or if completed)
+                      if (!task.isExpired || task.isCompleted) ...[
                         12.w,
-                        GestureDetector(
-                          onTap: onToggle,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            width: 38,
-                            height: 38,
-                            decoration: BoxDecoration(
-                              color: task.isCompleted
-                                  ? const Color(0xFF0F9D58)
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: task.isCompleted
-                                    ? const Color(0xFF0F9D58)
-                                    : const Color(0xFFE2E8F0),
-                                width: 1.8,
-                              ),
-                            ),
-                            child: task.isCompleted
-                                ? const Icon(
-                                    Icons.check,
-                                    size: 22,
-                                    color: Colors.white,
-                                  )
-                                : null,
-                          ),
+                        AppCheckbox(
+                          isChecked: task.isCompleted,
+                          onTap: (task.isCompleted && task.isExpired) ? null : onToggle,
                         ),
                       ],
                     ],
@@ -196,7 +150,7 @@ class TaskItemCard extends StatelessWidget {
   /// Builds the task item card with category accent strip, details, and optional slide-to-delete wrapper.
   @override
   Widget build(BuildContext context) {
-    if (onDelete == null) {
+    if (onDelete == null || task.isExpired || task.isCompleted) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 12.0),
         child: _buildCard(),
@@ -248,6 +202,82 @@ class TaskItemCard extends StatelessWidget {
           ],
         ),
         child: _buildCard(),
+      ),
+    );
+  }
+}
+
+/// Stateful widget rendering a real-time ticking badge for remaining task time.
+class _RealTimeBadge extends StatefulWidget {
+  /// The task model whose remaining time is displayed.
+  final TaskModel task;
+
+  /// Creates a [_RealTimeBadge] instance with required [task].
+  const _RealTimeBadge({required this.task});
+
+  @override
+  State<_RealTimeBadge> createState() => _RealTimeBadgeState();
+}
+
+/// State class managing 1-second periodic timer for [_RealTimeBadge].
+class _RealTimeBadgeState extends State<_RealTimeBadge> {
+  Timer? _timer;
+
+  /// Starts periodic timer on initialization.
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  /// Schedules 1-second periodic timer to refresh remaining time badge.
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  /// Cancels periodic timer when unmounted.
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  /// Builds remaining time badge with dynamic text and background color.
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final remainingText = widget.task.getRealTimeRemaining(now);
+    final badgeColor = widget.task.getRealTimeBadgeColor(now);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: badgeColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.access_time_rounded,
+            size: 12,
+            color: Colors.white,
+          ),
+          4.w,
+          Text(
+            remainingText,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+              letterSpacing: 0.3,
+            ),
+          ),
+        ],
       ),
     );
   }

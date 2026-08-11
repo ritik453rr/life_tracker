@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/common_widgets/app_top_bar.dart';
 import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../controller/create_task_controller.dart';
@@ -24,37 +25,14 @@ class CreateTaskPage extends StatelessWidget {
         child: Column(
           children: [
             // Top App Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => Get.back(),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      size: 24,
-                      color: Color(0xFF0066CC),
-                    ),
-                  ),
-                  16.w,
-                  Obx(() {
-                    return Text(
-                      controller.isEditing.value ? StringConstants.kEditTask : StringConstants.kCreateTask,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
-                      ),
-                    );
-                  }),
-                ],
-              ),
-            ),
-            const Divider(
-              height: 1,
-              thickness: 1,
-              color: Color(0xFFE2E8F0),
-            ),
+            Obx(() {
+              final titleText = controller.isRecreating.value
+                  ? StringConstants.kRecreateTask
+                  : (controller.isEditing.value
+                      ? StringConstants.kEditTask
+                      : StringConstants.kCreateTask);
+              return AppTopBar(title: titleText);
+            }),
 
             // Scrollable Content Form Area
             Expanded(
@@ -181,12 +159,17 @@ class CreateTaskPage extends StatelessWidget {
                     }),
                     32.h,
 
-                    // Create / Update Tasks Submit Button
+                    // Create / Update / Recreate Tasks Submit Button
                     SizedBox(
                       width: double.infinity,
                       height: 54,
                       child: Obx(() {
                         final isValid = controller.isFormValid.value;
+                        final buttonText = controller.isRecreating.value
+                            ? StringConstants.kRecreateTask
+                            : (controller.isEditing.value
+                                ? StringConstants.kUpdateTask
+                                : StringConstants.kCreateTasks);
                         return ElevatedButton(
                           onPressed: isValid ? controller.submitTasks : null,
                           style: ElevatedButton.styleFrom(
@@ -199,7 +182,7 @@ class CreateTaskPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            controller.isEditing.value ? StringConstants.kUpdateTask : StringConstants.kCreateTasks,
+                            buttonText,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,

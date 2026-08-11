@@ -45,12 +45,14 @@ class CreateTaskService {
 
           final rawTitle = item.titleController.text.trim();
           final rawDesc = item.descriptionController.text.trim();
+          final endOfDay = DateTime(date.year, date.month, date.day, 23, 59, 59);
 
           return TaskModel(
             id: item.id,
             title: rawTitle,
             category: categoryUpper,
             date: formattedDate,
+            dueDate: endOfDay,
             description: rawDesc.isEmpty ? null : rawDesc,
             categoryColor: categoryColor,
             isCompleted: false,

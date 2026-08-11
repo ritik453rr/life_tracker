@@ -1,0 +1,21 @@
+flutter_native_splash:
+  # Enable only Android & iOS
+  android: true
+  ios: true
+  web: false
+
+  # Main splash background
+  color: "#FFFFFF"
+
+  # Splash logo
+  image: assets/images/pngs/app_icon2.png
+
+  # Fullscreen
+  fullscreen: true
+
+  # Android 12+
+  android_12:
+    color: "#FFFFFF"
+    image: assets/images/pngs/app_icon2.png
+    icon_background_color: "#FFFFFF"
+    branding: assets/images/pngs/app_icon2.png

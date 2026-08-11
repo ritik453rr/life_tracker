@@ -112,26 +112,37 @@ class _AnimatedSmallBadgeRingState extends State<_AnimatedSmallBadgeRing>
     }
   }
 
-  /// Initializes animation controller starting strictly from 0.0 over 2 seconds.
+  /// Initializes animation controller over 600ms starting from 0.0 to target percentage.
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 600),
     );
-    _animation = CurvedAnimation(
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: widget.targetPercentage,
+    ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOutCubic,
-    );
-    _controller.forward(from: 0.0);
+    ));
+    _controller.forward();
   }
 
-  /// Restarts animation from 0.0 if target percentage updates.
+  /// Animates smoothly from current progress to new target percentage when widget updates.
   @override
   void didUpdateWidget(covariant _AnimatedSmallBadgeRing oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.targetPercentage != widget.targetPercentage) {
+      final current = _animation.value;
+      _animation = Tween<double>(
+        begin: current,
+        end: widget.targetPercentage,
+      ).animate(CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOutCubic,
+      ));
       _controller.forward(from: 0.0);
     }
   }
@@ -143,13 +154,13 @@ class _AnimatedSmallBadgeRingState extends State<_AnimatedSmallBadgeRing>
     super.dispose();
   }
 
-  /// Builds the animated small circular badge widget.
+  /// Builds the animated small circular badge widget using current interpolated progress.
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        final currentProgress = _animation.value * widget.targetPercentage;
+        final currentProgress = _animation.value.clamp(0.0, 1.0);
         final animatedPercentInt = (currentProgress * 100).round();
         final badgeColor = _getProgressColor(currentProgress);
 

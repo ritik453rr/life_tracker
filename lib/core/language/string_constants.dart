@@ -25,11 +25,14 @@ class StringConstants {
   static const String kAll = "ALL";
   static const String kUpcomingTasks = "Upcoming Tasks";
   static const String kViewAll = "View All";
+  static const String kNoUpcomingTasks = "No Upcoming Tasks";
+  static const String kNoTasksDescription = "You're all caught up! Tap + to create a new task.";
   static const String kTrackingSinceJan12024 = "TRACKING SINCE JAN 1, 2024";
 
   /// Create Task Labels
   static const String kCreateTask = "Create Task";
   static const String kEditTask = "Edit Task";
+  static const String kRecreateTask = "Recreate Task";
   static const String kUpdateTask = "Update Task";
   static const String kUntitledTask = "Untitled Task";
   static const String kDate = "DATE";
@@ -76,4 +79,11 @@ class StringConstants {
   /// Task Actions & Labels
   static const String kDelete = "Delete";
   static const String kTaskUpper = "TASK";
+  static const String kTrackingSince = "TRACKING SINCE";
+  static const String kTasksScheduledForPeriod = "tasks scheduled for this period";
+  static const String kTasksExpiredPendingReview = "tasks expired and pending review";
+  static const String kDaysLeft = "D LEFT";
+  static const String kHoursLeft = "H LEFT";
+  static const String kMinutesLeft = "M LEFT";
+  static const String kSecondsLeft = "S LEFT";
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/common_widgets/empty_state_widget.dart';
 import '../../../core/extension/sized_box_extension.dart';
 import '../../../core/language/string_constants.dart';
 import '../../../core/routing/app_routes.dart';
@@ -19,14 +20,20 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed(AppRoutes.createTask),
+        backgroundColor: const Color(0xFF0066CC),
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Colors.white, size: 28),
+      ),
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            Positioned.fill(
+            const DashboardHeader(),
+            Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                clipBehavior: Clip.none,
-                padding: const EdgeInsets.only(top: 75.0, bottom: 16.0),
+                padding: const EdgeInsets.only(top: 38, bottom: 38.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -84,55 +91,71 @@ class DashboardPage extends StatelessWidget {
                     // Upcoming Tasks Header
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            StringConstants.kUpcomingTasks,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w800,
-                              color: Color(0xFF0F172A),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () => Get.toNamed(
-                              AppRoutes.taskList,
-                              arguments: StringConstants.kAll,
-                            ),
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              minimumSize: const Size(0, 0),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: const Text(
-                              StringConstants.kViewAll,
+                      child: Obx(() {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              StringConstants.kUpcomingTasks,
                               style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF0066CC),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
+                                color: Color(0xFF0F172A),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                            if (controller.upcomingTasks.length > 10)
+                              TextButton(
+                                onPressed: () => Get.toNamed(
+                                  AppRoutes.taskList,
+                                  arguments: StringConstants.kAll,
+                                ),
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: const Size(0, 0),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
+                                child: const Text(
+                                  StringConstants.kViewAll,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF0066CC),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        );
+                      }),
                     ),
                     14.h,
 
-                    // Task Items List
+                    // Task Items List (Max 10) or Empty State Widget
                     Obx(() {
+                      if (controller.upcomingTasks.isEmpty) {
+                        return const EmptyStateWidget(
+                          icon: Icons.task_alt_rounded,
+                          title: StringConstants.kNoUpcomingTasks,
+                          description: StringConstants.kNoTasksDescription,
+                        );
+                      }
+                      final tasksToShow = controller.upcomingTasks
+                          .take(10)
+                          .toList();
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.upcomingTasks.length,
+                        itemCount: tasksToShow.length,
                         itemBuilder: (context, index) {
-                          final task = controller.upcomingTasks[index];
+                          final task = tasksToShow[index];
                           return TaskItemCard(
                             task: task,
                             onToggle: () =>
                                 controller.toggleTaskCompletion(index),
-                            onTap: () =>
-                                Get.toNamed(AppRoutes.createTask, arguments: task),
+                            onTap: () => Get.toNamed(
+                              AppRoutes.createTask,
+                              arguments: task,
+                            ),
                             onDelete: () => controller.deleteTask(task),
                           );
                         },
@@ -143,21 +166,8 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: DashboardHeader(),
-            ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(AppRoutes.createTask),
-        backgroundColor: const Color(0xFF0066CC),
-        elevation: 4,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
     );
   }
